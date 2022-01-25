@@ -22,8 +22,8 @@ categorical_pipeline = Pipeline(steps=[
 ])
 
 column_transformer = ColumnTransformer(transformers=[
-    ('categorical_pipelien', categorical_pipeline, categorical_features),
-    ('numerical_transformer', numerical_pipeline, numerical_features)], remainder="drop")
+    ('categorical_pipeline', categorical_pipeline, categorical_features),
+    ('numerical_pipeline', numerical_pipeline, numerical_features)], remainder="drop")
 
 x = column_transformer.fit_transform(dt)
 
