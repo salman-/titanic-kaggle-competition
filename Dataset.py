@@ -13,6 +13,8 @@ class Dataset:
 
     def __init__(self):
         self.dt = pd.read_csv("./datasets/train.csv")
+        self.test_dt = pd.read_csv('./datasets/test.csv')
+
         categorical_features = ['Sex', 'Embarked', 'Pclass']
         numerical_features = ['Age', 'SibSp', 'Fare', 'Parch']
 
@@ -34,16 +36,16 @@ class Dataset:
             ('one_hot', OneHotEncoder())
         ])
 
-        column_transformer = ColumnTransformer(transformers=[
+        self.column_transformer = ColumnTransformer(transformers=[
             ('cabin_pipeline', cabin_pipeline, ['Cabin']),
             ('categorical_pipeline', categorical_pipeline, categorical_features),
             ('numerical_pipeline', numerical_pipeline, numerical_features)],
             remainder="drop")
 
-        self.x = column_transformer.fit_transform(self.dt)
-
-        print("Column names: ", column_transformer.get_feature_names_out())
+        self.x = self.column_transformer.fit_transform(self.dt)
+        self.test_dt = self.column_transformer.fit_transform(self.test_dt)
+        print("Column names: ", self.column_transformer.get_feature_names_out())
 
     def get_train_test_dataset(self):
-        x_train,x_test,y_train,y_test = train_test_split(self.x,self.dt["Survived"],test_size=0.8,shuffle=True)
-        return x_train,x_test,y_train,y_test
+        x_train, x_test, y_train, y_test = train_test_split(self.x, self.dt["Survived"], test_size=0.8, shuffle=True)
+        return x_train, x_test, y_train, y_test
