@@ -10,9 +10,8 @@ x_train, x_test, y_train, y_test = dt.get_train_test_dataset()
 
 model = Sequential()
 model.add(Input(shape=x_train.shape[1]))
-model.add(Dense(35, activation='relu'))
-model.add(Dense(35, activation='relu'))
-model.add(Dense(35, activation='relu'))
+model.add(Dense(9, activation='relu'))
+model.add(Dense(9, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
 
 # model.summary()
@@ -31,4 +30,4 @@ dt = dt.drop(['Pclass', 'Name', 'Sex', 'Age', 'SibSp', 'Parch', 'Ticket', 'Fare'
 dt['Survived'] = predictions
 print(dt)
 
-dt.to_csv('./final_predictions.csv')
+dt.to_csv('./final_predictions.csv',index=False)
