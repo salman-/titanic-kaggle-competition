@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class CustomColumnTransformer:
 
     def __init__(self, func):

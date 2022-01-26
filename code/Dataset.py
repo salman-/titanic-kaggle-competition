@@ -12,8 +12,8 @@ from CustomColumnTransformer import CustomColumnTransformer
 class Dataset:
 
     def __init__(self):
-        self.dt = pd.read_csv("./datasets/train.csv")
-        self.test_dt = pd.read_csv('./datasets/test.csv')
+        self.dt = pd.read_csv("../datasets/train.csv")
+        self.test_dt = pd.read_csv('../datasets/test.csv')
 
         categorical_features = ['Sex', 'Embarked', 'Pclass']
         numerical_features = ['Age', 'SibSp', 'Fare', 'Parch']

@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 from Dataset import Dataset
 
@@ -24,10 +23,12 @@ model.compile(
     metrics=['accuracy']
 )
 
-model.fit(x=x_train, y=y_train, validation_data=(x_test, y_test), epochs=10)
+model.fit(x=x_train, y=y_train, validation_data=(x_test, y_test), epochs=15)
 
 predictions = tf.round(model.predict(dt.test_dt).flatten())
-dt = pd.read_csv('./datasets/test.csv')
+dt = pd.read_csv('../datasets/test.csv')
 dt = dt.drop(['Pclass', 'Name', 'Sex', 'Age', 'SibSp', 'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked'], axis=1)
 dt['Survived'] = predictions
 print(dt)
+
+dt.to_csv('./final_predictions.csv')
