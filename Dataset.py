@@ -4,21 +4,22 @@ from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
+from sklearn.model_selection import train_test_split
 
 from CustomColumnTransformer import CustomColumnTransformer
+
 
 class Dataset:
 
     def __init__(self):
-
-        dt = pd.read_csv("./datasets/train.csv")
+        self.dt = pd.read_csv("./datasets/train.csv")
         categorical_features = ['Sex', 'Embarked', 'Pclass']
         numerical_features = ['Age', 'SibSp', 'Fare', 'Parch']
 
         cabin_pipeline = Pipeline(steps=[
             ('rename', CustomColumnTransformer(CustomColumnTransformer.rename_cabin)),
-            ('impute_cabin_using_pclass',CustomColumnTransformer(CustomColumnTransformer.impute_cabin)),
-            ('one_hot_encoder',OneHotEncoder())
+            ('impute_cabin_using_pclass', CustomColumnTransformer(CustomColumnTransformer.impute_cabin)),
+            ('one_hot_encoder', OneHotEncoder())
         ])
 
         SimpleImputer.get_feature_names_out = (lambda self, names=None: self.feature_names_in_)
@@ -39,8 +40,10 @@ class Dataset:
             ('numerical_pipeline', numerical_pipeline, numerical_features)],
             remainder="drop")
 
-        self.x = column_transformer.fit_transform(dt)
+        self.x = column_transformer.fit_transform(self.dt)
 
         print("Column names: ", column_transformer.get_feature_names_out())
 
-
+    def get_train_test_dataset(self):
+        x_train,x_test,y_train,y_test = train_test_split(self.x,self.dt["Survived"],test_size=0.8,shuffle=True)
+        return x_train,x_test,y_train,y_test
