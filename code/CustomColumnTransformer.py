@@ -1,5 +1,7 @@
 import numpy as np
 
+# https://queirozf.com/entries/scikit-learn-pipelines-custom-pipelines-and-pandas-integration
+
 class CustomColumnTransformer:
 
     def __init__(self, func):
